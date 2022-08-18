@@ -45,8 +45,6 @@ def produce360view(
                     (carriers["THRU_DATE_SOURCE"] >= flights["flight_date"])
                     | carriers["THRU_DATE_SOURCE"].isNull()
                 )
-
-
             ),
         )
         .drop("CARRIER", "THRU_DATE_SOURCE", "START_DATE_SOURCE")
@@ -105,8 +103,6 @@ def produce360view_alternative(
         for src_dest in ("origin", "destination")
     ]
     return (
-        temp = join_with(flights, airports_origin, on="origin")
-        temp = join_with(temp, airports_origin, on="origin")
         flights.transform(join_with(airports_origin, on="origin"))
         .transform(join_with(airports_destination, on="dest"))
         .transform(lookup_carrier_names(carriers))
